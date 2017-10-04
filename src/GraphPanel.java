@@ -189,7 +189,7 @@ public class GraphPanel extends JComponent {
     }
 
     private class ControlPanel extends JToolBar {
-        private Action newNode = new NewNodeAction("Nuevo Estado");
+        private Action newNode = new NewNodeAction("Nuevo estado");
         private Action clearAll = new ClearAction("Limpiar panel");
         private Action color = new ColorAction("Color");
         private Action connect = new ConnectAction("Conectar");
@@ -456,7 +456,7 @@ public class GraphPanel extends JComponent {
                 JOptionPane.showMessageDialog(null, scrollPane, "Resultados", JOptionPane.NO_OPTION);
             } catch (Exception ex) {
                 //Hubo un error leyendo el archivo
-                JOptionPane.showMessageDialog(null, "Archivo incorrecto", "ERROR", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Datos incorrectos", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
 
 
