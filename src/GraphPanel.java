@@ -115,7 +115,11 @@ public class GraphPanel extends JComponent {
                         Edge newEdge = new Edge(aux,selected.get(0));
                         for(int j=0;j<edges.size();j++){
                             Edge edge = edges.get(j);
-                            if(edge.n1==aux){
+                            if(edge.n1==aux&&edge.n2==selected.get(0)){
+                                edge.setCaracteres(s1.trim().split(","));
+                                return;
+                            }
+                            else if(edge.n1==aux){
                                 for(String string : s1.trim().split(",")){
                                     for(String string2 :edge.getCaracteres() ){
                                         if(string.equals(string2)){
@@ -347,7 +351,7 @@ public class GraphPanel extends JComponent {
         public void actionPerformed(ActionEvent e) {
             Node.selectNone(nodes);
             Point p = mousePt.getLocation();
-            Color color = control.hueIcon.getColor();
+            Color color = new Color(rnd.nextInt());
             Node n = new Node(p, radius, color, kind);
             n.setSelected(true);
             nodes.add(n);
@@ -507,7 +511,7 @@ public class GraphPanel extends JComponent {
 
 
             JTable tablex = new JTable(rows, cols);
-            JOptionPane.showMessageDialog(null, new JScrollPane(tablex));
+            JOptionPane.showMessageDialog(control, new JScrollPane(tablex));
         }
     }
 
