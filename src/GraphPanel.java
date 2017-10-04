@@ -1,9 +1,6 @@
 /**
  * Created by Palaf on 02/10/2017.
  */
-
-import com.sun.deploy.util.ArrayUtil;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.io.BufferedReader;
@@ -25,14 +22,14 @@ public class GraphPanel extends JComponent {
     private ControlPanel control = new ControlPanel();
     private int radius = RADIUS;
     private Kind kind = Kind.Circular;
-    private List<Node> nodes = new ArrayList<Node>();
-    private List<Node> selected = new ArrayList<Node>();
-    private List<Edge> edges = new ArrayList<Edge>();
+    private List<Node> nodes = new ArrayList<>();
+    private List<Node> selected = new ArrayList<>();
+    private List<Edge> edges = new ArrayList<>();
     private Point mousePt = new Point(WIDE / 2, HIGH / 2);
     private Rectangle mouseRect = new Rectangle();
     private boolean selecting = false;
     private boolean connecting = false;
-    private ArrayList<String> caracteres = new ArrayList<String>();
+    private ArrayList<String> caracteres = new ArrayList<>();
     private Node aux;
     private Point aux2;
 
@@ -189,10 +186,6 @@ public class GraphPanel extends JComponent {
             }
             e.getComponent().repaint();
         }
-    }
-
-    public JToolBar getControlPanel() {
-        return control;
     }
 
     private class ControlPanel extends JToolBar {
@@ -451,7 +444,7 @@ public class GraphPanel extends JComponent {
                     if(Linea == null){
                         break;
                     }
-                    total+=Linea+" "+unAFD.checkWord(Linea)+"\n";
+                    total+= "La palabra "+Linea+" es : " +(unAFD.checkWord(Linea)? "valida":"no valida")+"\n";
                 }
                 JTextArea textArea = new JTextArea(total);
                 JScrollPane scrollPane = new JScrollPane(textArea);
@@ -577,16 +570,11 @@ public class GraphPanel extends JComponent {
         public boolean estadoFinal;
         public boolean estadoInicial;
         private Point p;
-        public HashMap<Integer, String> conexions;
         private int r;
         private Color color;
         private Kind kind;
         private boolean selected = false;
         private Rectangle b = new Rectangle();
-
-        public int getcountnodo() {
-            return this.countnodo;
-        }
 
         public void setEstadoInicial(boolean b) {
             this.estadoInicial = b;
@@ -608,7 +596,6 @@ public class GraphPanel extends JComponent {
             countnodo = count;
             count++;
             estadoFinal = false;
-            conexions = new HashMap<>();
         }
 
         /**
@@ -743,18 +730,6 @@ public class GraphPanel extends JComponent {
                 if (n.isSelected()) {
                     n.p.x += d.x;
                     n.p.y += d.y;
-                    n.setBoundary(n.b);
-                }
-            }
-        }
-
-        /**
-         * Update each node's radius r.
-         */
-        public static void updateRadius(List<Node> list, int r) {
-            for (Node n : list) {
-                if (n.isSelected()) {
-                    n.r = r;
                     n.setBoundary(n.b);
                 }
             }
