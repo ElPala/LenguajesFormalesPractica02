@@ -390,7 +390,7 @@ public class GraphPanel extends JComponent {
                 }
             }
             caracteres.sort(String::compareTo);
-            int table[][] = new int[nodes.size()][caracteres.size()];
+            String table[][] = new String[nodes.size()][caracteres.size()];
             for(int i=0; i<nodes.size();i++){
 
                 for( int j=0; j<edges.size(); j++ ){
@@ -400,29 +400,33 @@ public class GraphPanel extends JComponent {
                     if( n1  == nodes.get(i) ){
                         for(int o =0; o<cA.length;o++){
                             int dj =caracteres.indexOf(cA[o]);
-                            table[i][dj]=n2.countnodo;
+                            table[i][dj]=""+n2.countnodo;
                         }
                     }
                 }
             }
 
-            int inicial=0;
+            String inicial="";
             for(Node node: nodes){
                 if(node.estadoInicial){
-                    inicial=node.countnodo;
+                    inicial=""+node.countnodo;
                 }
             }
-            ArrayList<Integer> arrayList = new ArrayList<>();
+            ArrayList<String> arrayList = new ArrayList<>();
+            ArrayList<String> arrayList1 = new ArrayList<>();
+
             for(Node node: nodes){
                 if(node.estadoFinal){
-                    arrayList.add(node.countnodo);
+                    arrayList.add(""+node.countnodo);
                 }
+                arrayList1.add(""+node.countnodo);
             }
-            int x[]= new int[arrayList.size()];
+            String x[]= new String[arrayList.size()];
             for (int y=0;y<arrayList.size();y++){
                 x[y]=arrayList.get(y);
             }
-            AFD unAFD = new AFD(table,caracteres,inicial,nodes.size(),x);
+            arrayList1.sort(String::compareTo);
+            AFD unAFD = new AFD(table,caracteres,inicial,nodes.size(),x,arrayList1);
             //VARIABLES
             File file = null; //
             String total = "";
