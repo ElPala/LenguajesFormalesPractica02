@@ -1,4 +1,3 @@
-
 import java.awt.*;
 import java.awt.event.*;
 import java.io.BufferedReader;
@@ -105,30 +104,29 @@ public class GraphPanel extends JComponent {
                 Node.selectNone(nodes);
                 selecting = true;
             }
-            if(connecting ){
+            if (connecting) {
                 Node.getSelected(nodes, selected);
-                if(selected.size()>0){
+                if (selected.size() > 0) {
                     selected.get(0);
-                    connecting =false;
+                    connecting = false;
                     String s1 = JOptionPane.showInputDialog("Caracteres para transición:");
                     if (s1 != null && !s1.equals("")) {
-                        Edge newEdge = new Edge(aux,selected.get(0));
-                        for(int j=0;j<edges.size();j++){
+                        Edge newEdge = new Edge(aux, selected.get(0));
+                        for (int j = 0; j < edges.size(); j++) {
                             Edge edge = edges.get(j);
-                            if(edge.n1==aux&&edge.n2==selected.get(0)){
+                            if (edge.n1 == aux && edge.n2 == selected.get(0)) {
                                 edge.setCaracteres(s1.trim().split(","));
                                 return;
-                            }
-                            else if(edge.n1==aux){
-                                for(String string : s1.trim().split(",")){
-                                    for(String string2 :edge.getCaracteres() ){
-                                        if(string.equals(string2)){
-                                            edge.setCaracteres(removeElements(edge.getCaracteres(),string));
+                            } else if (edge.n1 == aux) {
+                                for (String string : s1.trim().split(",")) {
+                                    for (String string2 : edge.getCaracteres()) {
+                                        if (string.equals(string2)) {
+                                            edge.setCaracteres(removeElements(edge.getCaracteres(), string));
                                         }
                                     }
                                 }
                             }
-                            if(edge.getCaracteres().length==0){
+                            if (edge.getCaracteres().length == 0) {
                                 e.getComponent().repaint();
                                 ListIterator<Edge> iter = edges.listIterator();
                                 while (iter.hasNext()) {
@@ -141,22 +139,24 @@ public class GraphPanel extends JComponent {
                             }
                         }
                         edges.add(newEdge);
-                        edges.get(edges.size()-1).setCaracteres(s1.trim().split(","));
+                        edges.get(edges.size() - 1).setCaracteres(s1.trim().split(","));
                     }
                 }
             }
             e.getComponent().repaint();
 
         }
-        public  String[] removeElements(String[] input, String deleteMe) {
+
+        public String[] removeElements(String[] input, String deleteMe) {
             ArrayList result = new ArrayList<>();
 
-            for(String item : input)
-                if(!deleteMe.equals(item))
+            for (String item : input)
+                if (!deleteMe.equals(item))
                     result.add(item);
 
             return (String[]) result.toArray(new String[result.size()]);
         }
+
         private void showPopup(MouseEvent e) {
             control.popup.show(e.getComponent(), e.getX(), e.getY());
         }
@@ -305,7 +305,7 @@ public class GraphPanel extends JComponent {
             if (selected.size() > 0) {
                 Node n1 = selected.get(0);
                 connecting = true;
-                aux=n1;
+                aux = n1;
                 repaint();
             }
         }
@@ -382,51 +382,51 @@ public class GraphPanel extends JComponent {
 
         public void actionPerformed(ActionEvent e) {
             caracteres.clear();
-            for(Edge edge: edges){
-                for(String s1 :edge.getCaracteres()){
-                    if(!caracteres.contains(s1)){
+            for (Edge edge : edges) {
+                for (String s1 : edge.getCaracteres()) {
+                    if (!caracteres.contains(s1)) {
                         caracteres.add(s1);
                     }
                 }
             }
             caracteres.sort(String::compareTo);
             String table[][] = new String[nodes.size()][caracteres.size()];
-            for(int i=0; i<nodes.size();i++){
+            for (int i = 0; i < nodes.size(); i++) {
 
-                for( int j=0; j<edges.size(); j++ ){
+                for (int j = 0; j < edges.size(); j++) {
                     String[] cA = edges.get(j).getCaracteres();
                     Node n1 = edges.get(j).n1;
                     Node n2 = edges.get(j).n2;
-                    if( n1  == nodes.get(i) ){
-                        for(int o =0; o<cA.length;o++){
-                            int dj =caracteres.indexOf(cA[o]);
-                            table[i][dj]=""+n2.countnodo;
+                    if (n1 == nodes.get(i)) {
+                        for (int o = 0; o < cA.length; o++) {
+                            int dj = caracteres.indexOf(cA[o]);
+                            table[i][dj] = "" + n2.countnodo;
                         }
                     }
                 }
             }
 
-            String inicial="";
-            for(Node node: nodes){
-                if(node.estadoInicial){
-                    inicial=""+node.countnodo;
+            String inicial = "";
+            for (Node node : nodes) {
+                if (node.estadoInicial) {
+                    inicial = "" + node.countnodo;
                 }
             }
             ArrayList<String> arrayList = new ArrayList<>();
             ArrayList<String> arrayList1 = new ArrayList<>();
 
-            for(Node node: nodes){
-                if(node.estadoFinal){
-                    arrayList.add(""+node.countnodo);
+            for (Node node : nodes) {
+                if (node.estadoFinal) {
+                    arrayList.add("" + node.countnodo);
                 }
-                arrayList1.add(""+node.countnodo);
+                arrayList1.add("" + node.countnodo);
             }
-            String x[]= new String[arrayList.size()];
-            for (int y=0;y<arrayList.size();y++){
-                x[y]=arrayList.get(y);
+            String x[] = new String[arrayList.size()];
+            for (int y = 0; y < arrayList.size(); y++) {
+                x[y] = arrayList.get(y);
             }
             arrayList1.sort(String::compareTo);
-            AFD unAFD = new AFD(table,caracteres,inicial,nodes.size(),x,arrayList1);
+            AFD unAFD = new AFD(table, caracteres, inicial, nodes.size(), x, arrayList1);
             //VARIABLES
             File file = null; //
             String total = "";
@@ -441,12 +441,12 @@ public class GraphPanel extends JComponent {
             try {
                 BufferedReader bufferedReader;
                 bufferedReader = new BufferedReader(new FileReader(file.toString()));
-                while(true) {
+                while (true) {
                     String Linea = bufferedReader.readLine();
-                    if(Linea == null){
+                    if (Linea == null) {
                         break;
                     }
-                    total+= "La palabra "+Linea+" es : " +(unAFD.checkWord(Linea)? "valida":"no valida")+"\n";
+                    total += "La palabra " + Linea + " es : " + (unAFD.checkWord(Linea) ? "valida" : "no valida") + "\n";
                 }
                 JTextArea textArea = new JTextArea(total);
                 JScrollPane scrollPane = new JScrollPane(textArea);
@@ -470,25 +470,25 @@ public class GraphPanel extends JComponent {
 
         public void actionPerformed(ActionEvent e) {
             caracteres.clear();
-            for(Edge edge: edges){
-                for(String s1 :edge.getCaracteres()){
-                    if(!caracteres.contains(s1)){
+            for (Edge edge : edges) {
+                for (String s1 : edge.getCaracteres()) {
+                    if (!caracteres.contains(s1)) {
                         caracteres.add(s1);
                     }
                 }
             }
             caracteres.sort(String::compareTo);
             String table[][] = new String[nodes.size()][caracteres.size()];
-            for(int i=0; i<nodes.size();i++){
+            for (int i = 0; i < nodes.size(); i++) {
 
-                for( int j=0; j<edges.size(); j++ ){
+                for (int j = 0; j < edges.size(); j++) {
                     String[] cA = edges.get(j).getCaracteres();
                     Node n1 = edges.get(j).n1;
                     Node n2 = edges.get(j).n2;
-                    if( n1  == nodes.get(i) ){
-                        for(int o =0; o<cA.length;o++){
-                            int dj =caracteres.indexOf(cA[o]);
-                            table[i][dj]="q"+n2.countnodo;
+                    if (n1 == nodes.get(i)) {
+                        for (int o = 0; o < cA.length; o++) {
+                            int dj = caracteres.indexOf(cA[o]);
+                            table[i][dj] = "q" + n2.countnodo;
                         }
                     }
                 }
@@ -504,7 +504,7 @@ public class GraphPanel extends JComponent {
                 cols[o + 1] = caracteres.get(o);
             }
             for (int i = 0; i < nodes.size(); i++) {
-                rows[i][0] = "q"+nodes.get(i).countnodo;
+                rows[i][0] = "q" + nodes.get(i).countnodo;
 
             }
             for (int i = 0; i < nodes.size(); i++) {
@@ -535,6 +535,7 @@ public class GraphPanel extends JComponent {
         private Node n1;
         private Node n2;
         private String[] caracteres;
+
         public Edge(Node n1, Node n2) {
             this.n1 = n1;
             this.n2 = n2;
@@ -551,10 +552,10 @@ public class GraphPanel extends JComponent {
         public void draw(Graphics g) {
 
             g.setColor(Color.darkGray);
-            if(n1==n2){
+            if (n1 == n2) {
                 Point p1 = n1.b.getLocation();
-                g.drawArc(p1.x-15,p1.y+10,RADIUS,RADIUS,45,270);
-            }else{
+                g.drawArc(p1.x - 15, p1.y + 10, RADIUS, RADIUS, 45, 270);
+            } else {
                 Point p1 = n1.getLocation();
                 Point p2 = n2.getLocation();
                 g.drawLine(p1.x, p1.y, p2.x, p2.y);
@@ -614,12 +615,12 @@ public class GraphPanel extends JComponent {
             g.setColor(this.color);
             g.drawString("q" + countnodo, b.x, b.y);
             if (estadoFinal) {
-                g.drawString("F", b.x+b.height, b.y + b.height);
+                g.drawString("F", b.x + b.height, b.y + b.height);
             }
             if (estadoInicial) {
                 g.drawString("I", b.x, b.y + b.height);
             }
-                g.fillOval(b.x, b.y, b.width, b.height);
+            g.fillOval(b.x, b.y, b.width, b.height);
             if (selected) {
                 g.setColor(Color.darkGray);
                 g.drawRect(b.x, b.y, b.width, b.height);
@@ -690,6 +691,7 @@ public class GraphPanel extends JComponent {
             }
             return false;
         }
+
         /**
          * Select each node in r.
          */

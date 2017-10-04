@@ -9,7 +9,7 @@ public class AFD {
     String[] finales;
     ArrayList<String> estadosA;
 
-    public AFD(String[][] d, ArrayList<String> abecedario, String inicial, int estados, String[] finales,ArrayList<String> estadosA ) {
+    public AFD(String[][] d, ArrayList<String> abecedario, String inicial, int estados, String[] finales, ArrayList<String> estadosA) {
         this.d = d;
         this.abecedario = abecedario;
         this.inicial = inicial;
@@ -26,7 +26,7 @@ public class AFD {
             next = this.d[this.estadosA.indexOf(next)][this.abecedario.indexOf(letter)];
         }
         for (int i = 0; i < finales.length; i++) {
-            if (next.equals( finales[i])) {
+            if (next.equals(finales[i])) {
                 return true;
             }
         }
