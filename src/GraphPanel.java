@@ -1,6 +1,4 @@
-/**
- * Created by Palaf on 02/10/2017.
- */
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.BufferedReader;
@@ -10,9 +8,6 @@ import java.util.*;
 import java.util.List;
 import javax.swing.*;
 
-/**
- * @author John B. Matthews; distribution per GPL.
- */
 public class GraphPanel extends JComponent {
     public static int count;
     private static final int WIDE = 640;
@@ -423,8 +418,6 @@ public class GraphPanel extends JComponent {
             for (int y=0;y<arrayList.size();y++){
                 x[y]=arrayList.get(y);
             }
-
-//            public AFD(int[][] d, ArrayList<String> abecedario, int inicial, int estados, int[] finales) {
             AFD unAFD = new AFD(table,caracteres,inicial,nodes.size(),x);
             //VARIABLES
             File file = null; //
@@ -519,7 +512,7 @@ public class GraphPanel extends JComponent {
     }
 
     /**
-     * The kinds of node in a graph.
+     * The kind of node in a graph.
      */
     private enum Kind {
 
@@ -689,20 +682,6 @@ public class GraphPanel extends JComponent {
             }
             return false;
         }
-
-
-        public static boolean connected(List<Node> list, Point p) {
-            for (Node n : list) {
-                if (n.contains(p)) {
-                    if (!n.isSelected()) {
-                        Node.selectNone(list);
-                        n.setSelected(true);
-                    }
-                    return true;
-                }
-            }
-            return false;
-        }
         /**
          * Select each node in r.
          */
@@ -743,17 +722,6 @@ public class GraphPanel extends JComponent {
             for (Node n : list) {
                 if (n.isSelected()) {
                     n.color = color;
-                }
-            }
-        }
-
-        /**
-         * Update each node's kind.
-         */
-        public static void updateKind(List<Node> list, Kind kind) {
-            for (Node n : list) {
-                if (n.isSelected()) {
-                    n.kind = kind;
                 }
             }
         }

@@ -1,7 +1,4 @@
-/**
- * Created by Palaf on 03/10/2017.
- */
-import javax.swing.JOptionPane;
+
 import java.util.ArrayList;
 
 public class AFD {
@@ -20,7 +17,6 @@ public class AFD {
     }
 
     public boolean checkWord(String w) {
-        //int x= this.inicial;
         int next = this.inicial;
         String letter = "";
         for (int i = 0; i < w.length(); i++) {//        i is to check letters
