@@ -123,13 +123,14 @@ public class GraphPanel extends JComponent {
                             if(edge.n1==aux){
                                 for(String string : s1.trim().split(",")){
                                     for(String string2 :edge.getCaracteres() ){
-                                        if(string==string2){
+                                        if(string.equals(string2)){
                                             edge.setCaracteres(removeElements(edge.getCaracteres(),string));
                                         }
                                     }
                                 }
                             }
                             if(edge.getCaracteres().length==0){
+                                e.getComponent().repaint();
                                 ListIterator<Edge> iter = edges.listIterator();
                                 while (iter.hasNext()) {
                                     Edge eb = iter.next();
