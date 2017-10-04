@@ -9,11 +9,9 @@ import java.awt.event.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.List;
 import javax.swing.*;
-import javax.swing.event.*;
 
 /**
  * @author John B. Matthews; distribution per GPL.
@@ -135,8 +133,14 @@ public class GraphPanel extends JComponent {
                                 }
                             }
                             if(edge.getCaracteres().length==0){
-                                edges.remove(j);
-                                e.getComponent().repaint();
+                                ListIterator<Edge> iter = edges.listIterator();
+                                while (iter.hasNext()) {
+                                    Edge eb = iter.next();
+                                    if (eb == edge) {
+                                        iter.remove();
+                                        break;
+                                    }
+                                }
                             }
                         }
                         edges.add(newEdge);
@@ -198,8 +202,8 @@ public class GraphPanel extends JComponent {
         private Action connect = new ConnectAction("Conectar");
         private Action delete = new DeleteAction("Eliminar");
         private Action random = new RandomAction("Generar 3 estados");
-        private Action estadoFinal = new EstadoFinalAction("Estado Inicial");
-        private Action estadoInicial = new EstadoInicial("Estado Final");
+        private Action estadoFinal = new EstadoFinalAction("Estado Final");
+        private Action estadoInicial = new EstadoInicial("Estado Inicial");
         private Action showTableAction = new ShowTableAction("Mostrar tabla");
         private Action Ingresar = new Ingresar("Ingresar cadenas");
         private JButton defaultButton = new JButton(newNode);
@@ -247,7 +251,6 @@ public class GraphPanel extends JComponent {
         public void actionPerformed(ActionEvent e) {
             Node.getSelected(nodes, selected);
             if (selected.size() > 0) {
-
                 for (int i = 0; i < nodes.size(); ++i) {
                     Node no = nodes.get(i);
                     if (no.estadoInicial) {
@@ -255,9 +258,7 @@ public class GraphPanel extends JComponent {
                     }
 
                 }
-
                 Node n1 = selected.get(0);
-                n1.setEstadoFinal(false);
                 n1.setEstadoInicial(!n1.estadoInicial);
                 repaint();
             }
@@ -274,7 +275,6 @@ public class GraphPanel extends JComponent {
             for (int i = 0; i < selected.size(); ++i) {
                 Node n1 = selected.get(i);
                 n1.setEstadoFinal(!n1.estadoFinal);
-                n1.setEstadoInicial(false);
             }
             repaint();
 
@@ -313,6 +313,7 @@ public class GraphPanel extends JComponent {
                 Node n1 = selected.get(0);
                 connecting = true;
                 aux=n1;
+                repaint();
             }
         }
     }
@@ -552,11 +553,6 @@ public class GraphPanel extends JComponent {
             this.caracteres = caracteres;
         }
 
-        public Edge(Node n1, Node n2, String s1, String s2) {
-            this.n1 = n1;
-            this.n2 = n2;
-        }
-
         public void draw(Graphics g) {
 
             g.setColor(Color.darkGray);
@@ -629,8 +625,9 @@ public class GraphPanel extends JComponent {
             g.setColor(this.color);
             g.drawString("q" + countnodo, b.x, b.y);
             if (estadoFinal) {
-                g.drawString("F", b.x, b.y + b.height);
-            } else if (estadoInicial) {
+                g.drawString("F", b.x+b.height, b.y + b.height);
+            }
+            if (estadoInicial) {
                 g.drawString("I", b.x, b.y + b.height);
             }
                 g.fillOval(b.x, b.y, b.width, b.height);
